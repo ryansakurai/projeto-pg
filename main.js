@@ -1,64 +1,86 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const RENDERER = new THREE.WebGLRenderer({ antialias: true });
-RENDERER.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(RENDERER.domElement);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-const SCENE = new THREE.Scene();
-SCENE.background = new THREE.Color("rgb(26,82,168)");
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("rgb(26,82,168)");
 
-const CAMERA1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-CAMERA1.position.set(0, 0, 7);
-CAMERA1.lookAt(0, 0, 0);
+const camera1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera1.position.set(0, 0, 7);
+camera1.lookAt(0, 0, 0);
 
-const CAMERA2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-CAMERA2.position.set(4, 4, 7);
-CAMERA2.lookAt(0, 0, 0);
+const camera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera2.position.set(4, 4, 7);
+camera2.lookAt(0, 0, 0);
 
-const DIRECTIONAL_LIGHT = new THREE.DirectionalLight(undefined, 3);
-DIRECTIONAL_LIGHT.position.set(2, 1, 3);
-SCENE.add(DIRECTIONAL_LIGHT);
+const directionalLight = new THREE.DirectionalLight(undefined, 3);
+directionalLight.position.set(2, 1, 3);
+scene.add(directionalLight);
 
-let DUCK
-const LOADER = new GLTFLoader();
-LOADER.load(
+let duck
+const loader = new GLTFLoader();
+loader.load(
     "assets/duck/Duck.gltf",
     (gltf) => {
-        DUCK = gltf.scene;
-        SCENE.add(DUCK);
-        DUCK.position.set(0, -1, 0)
-        DUCK.rotation.y -= 1.85;
-        DUCK.rotation.x += 0.2;
+        duck = gltf.scene;
+        scene.add(duck);
+        duck.position.set(0, -1, 0)
+        duck.rotation.y -= 1.85;
+        duck.rotation.x += 0.2;
     }
 );
 
-const RING1 = new THREE.Mesh(
+const ringMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        time: { value: 0 }
+    },
+    vertexShader: `
+        void main() {
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform float time;
+        void main() {
+            vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(1.0, 0, 0), 0.5 + 0.5 * sin(time));
+            gl_FragColor = vec4(color, 1.0);
+        }
+    `
+});
+
+const ring1 = new THREE.Mesh(
     new THREE.TorusGeometry(2.25, 0.1, 16, 100),
-    new THREE.MeshBasicMaterial( { color: 0xffff00 } )
+    ringMaterial
 );
-SCENE.add(RING1);
+scene.add(ring1);
+const RING1_SPEED = [Math.random()*0.1, Math.random()*0.1, Math.random()*0.1];
 
-const RING2 = new THREE.Mesh(
+const ring2 = new THREE.Mesh(
     new THREE.TorusGeometry(2.75, 0.1, 16, 100),
-    new THREE.MeshBasicMaterial( { color: 0xffff00 } )
+    ringMaterial
 );
-SCENE.add(RING2);
+scene.add(ring2);
+const RING2_SPEED = [Math.random()*0.1, Math.random()*0.1, Math.random()*0.1];
 
-let currentCamera = CAMERA1;
+let currentCamera = camera1;
 
 const animate = () => {
     requestAnimationFrame(animate);
 
-    RING1.rotation.x += 0.015;
-    RING1.rotation.y += 0.025;
-    RING1.rotation.z += 0.035;
+    ringMaterial.uniforms.time.value += 0.1;
 
-    RING2.rotation.x += 0.03;
-    RING2.rotation.y += 0.02;
-    RING2.rotation.z += 0.01;
+    ring1.rotation.x += RING1_SPEED[0];
+    ring1.rotation.y += RING1_SPEED[1];
+    ring1.rotation.z += RING1_SPEED[2];
 
-    RENDERER.render(SCENE, currentCamera);
+    ring2.rotation.x += RING2_SPEED[0];
+    ring2.rotation.y += RING2_SPEED[1];
+    ring2.rotation.z += RING2_SPEED[2];
+
+    renderer.render(scene, currentCamera);
 }
 
 document.addEventListener(
@@ -66,9 +88,9 @@ document.addEventListener(
     (event) => {
         if(event) {
             if(event.key === "ArrowUp")
-                currentCamera = CAMERA1;
+                currentCamera = camera1;
             else if(event.key === "ArrowDown")
-                currentCamera = CAMERA2;
+                currentCamera = camera2;
         }
     }
 );
@@ -76,10 +98,10 @@ document.addEventListener(
 window.addEventListener(
     'resize',
     () => {
-        CAMERA1.aspect = CAMERA2.aspect = window.innerWidth / window.innerHeight;
-        CAMERA1.updateProjectionMatrix();
-        CAMERA2.updateProjectionMatrix();
-        RENDERER.setSize(window.innerWidth, window.innerHeight);
+        camera1.aspect = camera2.aspect = window.innerWidth / window.innerHeight;
+        camera1.updateProjectionMatrix();
+        camera2.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
     }
 );
 

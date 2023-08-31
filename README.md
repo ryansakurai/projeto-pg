@@ -6,6 +6,8 @@ O projeto implementa a visualização de um cena pela perspectiva de quatro câm
 - Dois anéis (toros), cuja cor flutua entre branco e vermelho (feito através de um *shader* personalizado) rotacionando em torno do pato com velocidades aleatórias;
 - Fundo cor azul celeste.
 
+![Example of execution](assets/readme_example.gif)
+
 ### Modo de Interação
 
 É possível alternar entre as câmeras usando as teclas ↑ e ↓.

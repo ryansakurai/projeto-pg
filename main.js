@@ -53,6 +53,7 @@ const ringMaterial = new THREE.ShaderMaterial({
         time: { value: 0 }
     },
     vertexShader: `
+        // stardard projection procedure
         void main() {
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
@@ -60,8 +61,10 @@ const ringMaterial = new THREE.ShaderMaterial({
     fragmentShader: `
         uniform float time;
         void main() {
-            vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(1.0, 0, 0), 0.5 + 0.5 * sin(time));
-            gl_FragColor = vec4(color, 1.0);
+            // interpolation between white and red based on time
+            vec3 rgbColor = mix(vec3(1.0, 1.0, 1.0), vec3(1.0, 0, 0), 0.5 + 0.5 * sin(time));
+            vec4 rgbaColor = vec4(rgbColor, 1.0);
+            gl_FragColor = rgbaColor;
         }
     `
 });

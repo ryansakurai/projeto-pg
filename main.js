@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
-import {Cameras} from "./cameras_class.js"
+import {CameraSet} from "./camera_set_class.js"
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -9,27 +9,27 @@ document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color("rgb(26,82,168)");
 
-const cameras = new Cameras();
+const cameraSet = new CameraSet();
 
 const camera1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera1.position.set(0, 0, 7);
 camera1.lookAt(0, 0, 0);
-cameras.addCamera(camera1);
+cameraSet.addCamera(camera1);
 
 const camera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera2.position.set(4, 4, 7);
 camera2.lookAt(0, 0, 0);
-cameras.addCamera(camera2);
+cameraSet.addCamera(camera2);
 
 const camera3 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera3.position.set(-4, -4, 7);
 camera3.lookAt(0, 0, 0);
-cameras.addCamera(camera3);
+cameraSet.addCamera(camera3);
 
 const camera4 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera4.position.set(0, 6, 0);
 camera4.lookAt(0, 0, 0);
-cameras.addCamera(camera4);
+cameraSet.addCamera(camera4);
 
 const directionalLight = new THREE.DirectionalLight(undefined, 3);
 directionalLight.position.set(2, 1, 3);
@@ -96,7 +96,7 @@ const animate = () => {
     ring2.rotation.y += RING2_SPEED[1];
     ring2.rotation.z += RING2_SPEED[2];
 
-    renderer.render(scene, cameras.currentCamera);
+    renderer.render(scene, cameraSet.currentCamera);
 }
 
 document.addEventListener(
@@ -104,9 +104,9 @@ document.addEventListener(
     (event) => {
         if(event) {
             if(event.key === "ArrowUp")
-                cameras.prevCamera();
+                cameraSet.prevCamera();
             else if(event.key === "ArrowDown")
-                cameras.nextCamera();
+                cameraSet.nextCamera();
         }
     }
 );

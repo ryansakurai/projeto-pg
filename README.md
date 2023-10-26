@@ -1,21 +1,13 @@
-# Projeto de Processamento Gráfico
+# Graphic Processing Project
 
-O projeto implementa a visualização de um cena pela perspectiva de quatro câmeras diferentes. A cena consiste de:
+The project implements the visualization of a scene from the perspective of four different cameras. The scene consists of:
 
-- Um pato de borracha, carregado a partir de um modelo 3D externo, iluminado por uma iluminação direcional;
-- Dois anéis (toros), cuja cor flutua entre branco e vermelho (feito através de um *shader* personalizado) rotacionando em torno do pato com velocidades aleatórias;
-- Fundo cor azul celeste.
+- A rubber duck, loaded from an external 3D model, illuminated by directional lighting;
+- Two tori (rings) whose color fluctuates between white and red (made using a custom shader), spinning around the duck at random speeds;
+- Azure background.
 
 ![Example of execution](img/example.gif)
 
-### Modo de Interação
+### User Interaction
 
-É possível alternar entre as câmeras usando as teclas ↑ e ↓.
-
-## Especificações Atendidas
-
-- Visualização de um objeto 3D por membro: pato de borracha (1/3), primeiro anel (2/3) e segundo anel (3/3). O pato foi posicionado através das propriedades *position* e *rotation* do objeto no JS e os anéis através dos parâmetros passados na instanciação de suas geometrias.
-- Utilização de um shader próprio em um dos objetos: foram usados em ambos os anéis um *vertex shader* padrão e um *fragment shader* que faz com que a cor do material flutue entre vermelho e branco. Isto foi feito através de uma função seno que define a proporção entre branco e vermelho em função do tempo. A variável de tempo é incrementada pelo próprio programa em JS através do uso de *uniforms*.
-- Definição de pelo menos duas câmeras: foram definidas quatro câmeras.
-- Movimento simples de pelo menos um objeto: ambos os anéis rotacional em torno dos três eixos com velocidades aleatórias.
-- Documentação no GitHub através de um README: 📍
+It's possible to switch between cameras using ↑ and ↓.

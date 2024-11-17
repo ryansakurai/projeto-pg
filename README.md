@@ -1,13 +1,19 @@
-# Graphic Processing Project
+<h1 align="center"> 🎨 Scene Rendered in Three.js 🎨 </h1>
 
 The project implements the visualization of a scene from the perspective of four different cameras. The scene consists of:
 
-- A rubber duck, loaded from an external 3D model, illuminated by directional lighting;
-- Two tori (rings) whose color fluctuates between white and red (made using a custom shader), spinning around the duck at random speeds;
-- Azure background.
+- A rubber duck
+    - Loaded from an external 3D model
+    - Illuminated by directional lighting
+- Two tori (rings) spinning around the duck
+    - Their colors fluctuate between white and red (custom shader)
+    - Their rotation speed is randomly defined at page load
+- Azure background
 
-![Example of execution](img/example.gif)
+## 🚀 Execution
 
-### User Interaction
+![Example of execution](readme-assets/example.gif)
 
-It's possible to switch between cameras using ↑ and ↓.
+## 🕹️ User Interaction
+
+To switch between cameras use ↑ and ↓.

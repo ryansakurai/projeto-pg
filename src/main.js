@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
-import {CameraSet} from "./camera_set_class.js"
+import {CameraSet} from "./camera-set.js"
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -38,7 +38,7 @@ scene.add(directionalLight);
 let duck
 const loader = new GLTFLoader();
 loader.load(
-    "assets/duck/Duck.gltf",
+    "../assets/duck/Duck.gltf",
     (gltf) => {
         duck = gltf.scene;
         scene.add(duck);

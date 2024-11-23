@@ -17,3 +17,11 @@ The project implements the visualization of a scene from the perspective of four
 ## 🕹️ User Interaction
 
 To switch between cameras use ↑ and ↓.
+
+## © Autores
+
+- [Caike dos Santos](https://github.com/CaikeSantos)
+- [Guilherme Bortoletto](https://github.com/guilherme-bortoletto)
+- [Ryan Sakurai](https://github.com/ryansakurai)
+
+*(Computer Science students at UFSCar - Federal University of São Carlos)*
